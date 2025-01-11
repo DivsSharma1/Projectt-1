@@ -1,12 +1,8 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
 const User = require("../models/userModel");
 const router = express.Router();
-const sgMail = require("@sendgrid/mail");
-
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // 1. User Registration
 router.post("/register", async (req, res) => {
@@ -87,10 +83,8 @@ router.post("/forgot-password", async (req, res) => {
 
     const resetLink = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
 
-    // Simulate sending email by logging the link (Temporary)
     console.log(`Password Reset Link: ${resetLink}`);
 
-    // Respond with the reset link in case the email service is not used
     res
       .status(200)
       .json({ message: "Password reset email would be sent", resetLink });
